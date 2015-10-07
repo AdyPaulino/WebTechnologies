@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>Conestoga Pizzeria - Assignment 1</title>
+		<link type="text/css" rel="stylesheet" href="css/style.css"/> 
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+		<script src="js/validation.js"></script>
+		<script src="js/javascript.js"></script>
+	</head>
+	<body>
+		<div class="container">
+			<div class="row">
+				<div class="form-group col-lg-6 col-sm-12">
+					<form id="personal">
+						<fieldset> <legend>Personal Information</legend>
+							<div id="personName">
+								<label class="control-label" for="inputName">Name</label>
+								<input type="text" class="form-control" id="inputName">
+							</div>
+							<div id="phone">
+								<label class="control-label" for="inputPhone">Telephone</label>
+								<input type="text" class="form-control" id="inputPhone" size="13">
+							</div>
+							<div id="email">
+								<label class="control-label" for="inputEmail">Email address</label>
+								<input type="email" class="form-control" id="inputEmail">
+							</div>
+							<fieldset> <legend>Address</legend>
+								<div id="street">
+									<label class="control-label" for="inputStreet">Street</label>
+									<input type="text" class="form-control" id="inputStreet">
+								</div>
+								<div id="province">
+									<label class="control-label" for="selectProvince">Province</label>
+									<select id="selectProvince" class="form-control">
+										<option value="0">Select</option>
+										<option value="QB">QB</option>
+										<option value="MA">MA</option>
+										<option value="ON">ON</option>
+										<option value="SK">SK</option>	
+									</select>
+								</div>
+								<div id="city">
+									<label class="control-label" for="inputCity">City</label>
+									<input type="text" class="form-control" id="inputCity">
+								</div>
+								<div id="postal">
+									<label class="control-label" for="inputPostalCode">Postal Code</label>
+									<input type="text" class="form-control" id="inputPostalCode" size="7">
+								</div>
+							</fieldset>
+						</fieldset>	
+					</form>
+				</div>
+				<div class="form-group col-lg-6 col-sm-12">
+					<form id="order">
+						<fieldset> <legend>Order Information</legend>
+							<div class="form-group col-lg-6 col-sm-12">
+								<label>Pizza size</label>
+								<div class="radio">
+									<label>
+										<input type="radio" name="radioPizzaSize" id="small" value="Small" checked> Small
+									</label>
+								</div>
+								<div class="radio">
+									<label>
+										<input type="radio" name="radioPizzaSize" id="med" value="Med"> Medium
+									</label>
+								</div>
+								<div class="radio">
+									<label>
+										<input type="radio" name="radioPizzaSize" id="large" value="Large" > Large
+									</label>
+								</div>
+								<div class="radio">
+									<label>
+										<input type="radio" name="radioPizzaSize" id="xl" value="XL" > X-Large
+									</label>
+								</div>
+								<label>Crust Type</label>
+								<div class="radio">
+									<label>
+										<input type="radio" name="radioCrustType" id="hand-tossed" value="Hand-tossed" checked> Hand-tossed
+									</label>
+								</div>
+								<div class="radio">
+									<label>
+										<input type="radio" name="radioCrustType" id="pan" value="Pan"> Pan
+									</label>
+								</div>
+								<div class="radio">
+									<label>
+										<input type="radio" name="radioCrustType" id="stuffed" value="Stuffed" > Stuffed
+									</label>
+								</div>
+								<div class="radio">
+									<label>
+										<input type="radio" name="radioCrustType" id="thin" value="Thin" > Thin
+									</label>
+								</div>
+							</div>
+							<div class="form-group col-lg-6 col-sm-12">
+								<label>Toppings</label>
+								<div class="checkbox">
+									<label>
+										<input type="checkbox" id="bacon" value="Bacon"> Bacon crumble
+									</label>
+								</div>
+								<div class="checkbox">
+									<label>
+										<input type="checkbox" id="salami" value="Salami"> Salami
+									</label>
+								</div>
+								<div class="checkbox">
+									<label>
+										<input type="checkbox" id="peperoni" value="Peperoni"> Peperoni
+									</label>
+								</div>
+								<div class="checkbox">
+									<label>
+										<input type="checkbox" id="ham" value="Ham"> Ham
+									</label>
+								</div>
+								<div class="checkbox">
+									<label>
+										<input type="checkbox" id="mozzarella" value="Mozzarella"> Mozzarella
+									</label>
+								</div>
+								<div class="checkbox">
+									<label>
+										<input type="checkbox" id="extraCheese" value="ExtraCheese"> Extra Cheese
+									</label>
+								</div>
+								<div class="checkbox">
+									<label>
+										<input type="checkbox" id="tomato" value="Tomato"> Tomato
+									</label>
+								</div>
+								<div class="checkbox">
+									<label>
+										<input type="checkbox" id="olives" value="Olives"> Olives
+									</label>
+								</div>
+								<div class="checkbox">
+									<label>
+										<input type="checkbox" id="broccoli" value="Broccoli"> Broccoli
+									</label>
+								</div>
+								<div class="checkbox">
+									<label>
+										<input type="checkbox" id="garlicSauce" value="GarlicSauce"> Garlic Sauce
+									</label>
+								</div>
+								<div class="checkbox">
+									<label>
+										<input type="checkbox" id="tomatoSauce" value="TomatoSauce"> Tomato Sauce
+									</label>
+								</div>
+								<div id="toppingMessage" class="hidden alert alert-warning">
+									You didn't selected any topping! Just to remind you: one topping is free!
+								</div>
+							</div>
+						</fieldset>
+					</form>
+				</div>
+				<div class="form-group col-lg-12 col-sm-12 text-right">
+					<button type="submit" class="btn btn-success" id="buttonOrder">Order</button>
+				</div>
+			</div>
+		</div>
+	</body>
+</html>
