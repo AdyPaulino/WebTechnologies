@@ -35,6 +35,8 @@
           return "Please enter your Postal Code";
         }
 
+		personalInformation($arr);
+		
     }
 
     function calculateTotal(){
@@ -62,7 +64,16 @@
 			}
 		}
 		
+		$summary .= "<p class='text-left'><h3>Pizza</h3>";
+		$summary .= "<dl class='text-left'>";
+		$summary .= "<dt>Size</dt>";
+		$summary .= "<dd>".$pizzaSize."</dd>";
+		$summary .= "<dt>Crust Type</dt>";
+		$summary .= "<dd>".$_POST["radioCrustType"]."</dd>";
+		$summary .= "<dt>Toppings</dt>";
+		
 		$sum = sumToppings();
+		$summary .= "</dl>";
 		
 		if ($sum > 0){
 			$total += $sum * 0.5;
@@ -70,37 +81,43 @@
 		
 		getTaxes();
 		
-		$summary .= "<p>Your total is CAD$".number_format($total, 2)."</p>";
-		$summary .= "Test";
+		$summary .= "</p><p><h3 class='text-danger text-right'>Your total is CAD$".number_format($total, 2)."</h3></p>";
 
-		return $summary;
     }
 	
 	function getTaxes(){
-		global $total;
+		global $total, $summary;
 		if (isset($_POST["selectProvince"])){
+			$tax = 1;
 			switch($_POST["selectProvince"]){
 				case "ON":
-					$total = $total * 1.13;
+					$tax = 13;
 					break;
 				case "QC":
-					$total = $total * 1.14975;
+					$tax = 14.975;
 					break;
 				case "MB":
-					$total = $total * 1.08;
+					$tax = 8;
 					break;
 				case "SK":
-					$total = $total * 1.10;
+					$tax = 10;
 					break;
 			}
+			
+			$total = $total * ((100+$tax)/100);
+			
+			$summary .= "<h3>Tax</h3>";
+			$summary .= "<p class='text-left'>".$tax."% </p>";
 		}
 	}
 	
 	function sumToppings(){
+		global $summary;
 		$count = 0;
 		if(!empty($_POST['toppings'])) {
 			foreach($_POST['toppings'] as $check) {
 				$count++;
+				$summary .= "<dd>".$check."</dd>";
 			}
 		}
 		if ($count > 1){
@@ -121,13 +138,36 @@
 		
 		return " ";
 	}
+	
+	function personalInformation($arr) {
+        extract($arr);
+		global $summary;
+		$summary .= "<h3>Address</h3>";
+		$summary .=	"<address class='text-left'>"
+				.$inputStreet ."<br>"
+				.$inputCity.", ".$selectProvince." ".$inputPostalCode."<br>"
+				."<abbr title='Phone'>P:</abbr>".$inputPhone
+				."</address> ";
+
+		$summary .=	"<address class='text-left'>"
+				."<strong>".$inputName."</strong><br>"
+				."<a href='mailto:#'>".$inputEmail."</a>"
+				."</address>";
+	}
 
     if(isset($_POST['buttonOrder'])) {
         $errorMsg = validateFeedbackForm($_POST);
+		global $summary;
 		if (!isset($errorMsg)){
-			$summary = calculateTotal();
+			calculateTotal();
+			
+			//get the file
+			$file = 'receipt.txt';
+			// Write the contents to the file
+			file_put_contents($file, $summary);
 		}
     }
+	
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -302,21 +342,22 @@
                                     <input type="checkbox" id="tomatoSauce" value="TomatoSauce" name="toppings[]" <?php echo checkToppings('TomatoSauce'); ?>> Tomato Sauce
                                 </label>
                             </div>
-                            <div id="toppingMessage" class="hidden alert alert-warning">
-                                You didn't selected any topping! Just to remind you: one topping is free!
-                            </div>
                         </div>
                     </fieldset>
 				    </div>
 				    <div class="form-group col-lg-12 col-sm-12 text-right">
 					   <button type="submit" class="btn btn-success" id="buttonOrder" name="buttonOrder">Order</button>
 				    </div>
-                    <div class="form-group col-lg-12 col-sm-12 text-center alert alert-info">
+                    <div class="form-group col-lg-12 col-sm-12 text-center alert alert-info <?php
+							if(!(isset($summary) && $summary)) {echo ' hidden';} ?>">
                         <?php
 							if(isset($summary) && $summary) {
-                              echo "<h1>SUMMARY</h1>". $summary."\n\n";
+                              echo "<h1>SUMMARY</h1><h2>Your order has been successfully submitted as following:</h2>". $summary;
                             }
                         ?>
+						<div class="form-group col-lg-12 col-sm-12 text-right">
+							<button type="button" class="btn btn-default" id="buttonPrint" name="buttonPrint">Print Receipt</button>
+						</div>
                     </div>
                 </div>
             </div>

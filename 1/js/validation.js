@@ -1,4 +1,3 @@
-var toppingValidation = false;
 var total = 0;
 
 function $(name){
@@ -100,32 +99,11 @@ function validatePersonal(){
 	
 }
 
-function validateToppings(){
-	var inputElements = document.getElementsByTagName('input');
-	for(var i=0; inputElements[i]; ++i){
-      if(isChecked(inputElements[i])){
-		toppingValidation = false;
-		$("toppingMessage").classList.add('hidden');
-		return true;
-      }
-	}
-	//just to mark that the message was showned
-	toppingValidation = true;
-	$("toppingMessage").classList.remove('hidden');
-	return false;
-}
-
 function validateOrder(){
 	var result = true;
 	
-	/*if (!validateToppings()){
-		if (toppingValidation == true){
-			confirm = true;
-		}
-	}  */
-	
-	validateToppings();
 	sumTotal();
+	
 	if (!confirm('Your total is CAD$' + Number(total).toFixed(2)  + '. \nCould you confirm please?')){
 		result = false;
 		total = 0;
